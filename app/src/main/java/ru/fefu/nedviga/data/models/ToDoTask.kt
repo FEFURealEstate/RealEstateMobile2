@@ -1,7 +1,17 @@
 package ru.fefu.nedviga.data.models
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
+import ru.fefu.nedviga.util.Constants.DATABASE_TABLE
 
-@Entity
-data class ToDoTask {
-}
+@Entity(tableName = DATABASE_TABLE)
+data class ToDoTask (
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val comment: String,
+    val duration: Int,
+    val type: TaskType,
+    //uuid
+    //agent_id
+    //datetime
+)
