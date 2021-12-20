@@ -1,10 +1,12 @@
 package ru.fefu.nedviga.data.repositories
 
+import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import ru.fefu.nedviga.data.ToDoDao
 import ru.fefu.nedviga.data.models.ToDoTask
 import javax.inject.Inject
 
+@ViewModelScoped
 class ToDoRepository @Inject constructor(private val toDoDao: ToDoDao) {
 
     val getAllTasks: Flow<List<ToDoTask>> = toDoDao.getAllTasks()
