@@ -2,6 +2,7 @@ package ru.fefu.nedviga.data
 
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
+import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
 
 @Dao
@@ -12,6 +13,15 @@ interface ToDoDao {
 
     @Query("SELECT * FROM todo_table WHERE id=:taskId")
     fun getSelectedTask(taskId: Int): Flow<ToDoTask>
+
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'M%'")
+    fun getMeetingTasks(): Flow<List<ToDoTask>>
+
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'S%'")
+    fun getShowingTasks(): Flow<List<ToDoTask>>
+
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'C%'")
+    fun getCallingTasks(): Flow<List<ToDoTask>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTask(toDoTask: ToDoTask)
