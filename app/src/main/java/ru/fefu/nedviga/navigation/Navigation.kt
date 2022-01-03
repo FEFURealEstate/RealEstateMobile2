@@ -6,10 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ru.fefu.nedviga.navigation.destinations.listComposable
 import ru.fefu.nedviga.navigation.destinations.taskComposable
+import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Constants.LIST_SCREEN
 
 @Composable
-fun SetupNavigation(navController: NavHostController) {
+fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedViewModel) {
     val screen = remember(navController) {
         Screens(navController = navController)
     }
@@ -18,7 +19,7 @@ fun SetupNavigation(navController: NavHostController) {
         navController = navController,
         startDestination = LIST_SCREEN
     ) {
-        listComposable(navigateToTaskScreen = screen.task)
+        listComposable(navigateToTaskScreen = screen.task, sharedViewModel = sharedViewModel)
         taskComposable(navigateToListScreen = screen.list)
     }
 }
