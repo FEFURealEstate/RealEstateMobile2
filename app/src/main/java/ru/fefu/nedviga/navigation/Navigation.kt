@@ -1,5 +1,6 @@
 package ru.fefu.nedviga.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
@@ -9,6 +10,7 @@ import ru.fefu.nedviga.navigation.destinations.taskComposable
 import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Constants.LIST_SCREEN
 
+@ExperimentalMaterialApi
 @Composable
 fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedViewModel) {
     val screen = remember(navController) {

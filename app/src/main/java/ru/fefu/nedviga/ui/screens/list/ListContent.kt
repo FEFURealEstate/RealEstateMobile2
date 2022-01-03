@@ -2,6 +2,8 @@ package ru.fefu.nedviga.ui.screens.list
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -19,8 +21,25 @@ import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.ui.theme.taskItemBackgroundColor
 import ru.fefu.nedviga.ui.theme.taskItemTextColor
 
+@ExperimentalMaterialApi
 @Composable
-fun ListContent() {
+fun ListContent(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit
+) {
+    LazyColumn {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            TaskItem(
+                toDoTask = task,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
+    }
 }
 
 @ExperimentalMaterialApi
