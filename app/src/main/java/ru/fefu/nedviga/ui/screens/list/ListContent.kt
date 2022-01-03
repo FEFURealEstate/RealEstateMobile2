@@ -124,7 +124,7 @@ fun TaskItem(
 @ExperimentalMaterialApi
 @Composable
 @Preview
-fun TaskItemPreview() {
+private fun TaskItemPreview() {
     TaskItem(
         toDoTask = ToDoTask(0, "Comment", 50, TaskType.SHOWING),
         navigateToTaskScreen = {}
