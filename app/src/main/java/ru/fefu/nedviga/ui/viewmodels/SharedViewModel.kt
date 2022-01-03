@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.data.repositories.ToDoRepository
+import ru.fefu.nedviga.util.RequestState
 import ru.fefu.nedviga.util.SearchAppBarState
 import javax.inject.Inject
 
@@ -22,14 +23,19 @@ class SharedViewModel @Inject constructor(
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
     val searchTextState: MutableState<String> = mutableStateOf("")
-    private val _allTasks = MutableStateFlow<List<ToDoTask>>(emptyList())
-    val allTasks: StateFlow<List<ToDoTask>> = _allTasks
+    private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
+    val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
     fun getAllTasks() {
-        viewModelScope.launch {
-            repository.getAllTasks.collect() {
-                _allTasks.value = it
+        _allTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                repository.getAllTasks.collect {
+                    _allTasks.value = RequestState.Success(it)
+                }
             }
+        } catch (e: Exception) {
+            _allTasks.value = RequestState.Error(e)
         }
     }
 }

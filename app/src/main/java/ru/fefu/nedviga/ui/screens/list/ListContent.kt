@@ -20,20 +20,23 @@ import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.ui.theme.taskItemBackgroundColor
 import ru.fefu.nedviga.ui.theme.taskItemTextColor
+import ru.fefu.nedviga.util.RequestState
 
 @ExperimentalMaterialApi
 @Composable
 fun ListContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (tasks.isEmpty()) {
-        EmptyContent()
-    } else {
-        DisplayTasks(
-            tasks = tasks,
-            navigateToTaskScreen = navigateToTaskScreen
-        )
+    if(tasks is RequestState.Success){
+        if (tasks.data.isEmpty()) {
+            EmptyContent()
+        } else {
+            DisplayTasks(
+                tasks = tasks.data,
+                navigateToTaskScreen = navigateToTaskScreen
+            )
+        }
     }
 }
 
