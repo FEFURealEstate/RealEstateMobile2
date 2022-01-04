@@ -1,18 +1,14 @@
 package ru.fefu.nedviga.ui.screens.list
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
-import androidx.compose.material.Scaffold
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
+import kotlinx.coroutines.launch
 import ru.fefu.nedviga.ui.theme.Purple500
 import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
 
 @ExperimentalMaterialApi
@@ -28,8 +24,17 @@ fun ListScreen (
     val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
-    sharedViewModel.handleDatabaseActions(action = action)
+    val scaffoldState = rememberScaffoldState()
+
+    DisplaySnackBar(
+        scaffoldState = scaffoldState,
+        handleDatabaseActions = { sharedViewModel.handleDatabaseActions(action = action) },
+        taskComment = sharedViewModel.comment.value,
+        action = action
+    )
+
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
              ListAppBar(
                  sharedViewModel = sharedViewModel,
@@ -64,5 +69,27 @@ fun ListFab(
             contentDescription = "Add Button",
             tint = Color.White
         )
+    }
+}
+
+@Composable
+fun DisplaySnackBar(
+    scaffoldState: ScaffoldState,
+    handleDatabaseActions: () -> Unit,
+    taskComment: String,
+    action: Action
+) {
+    handleDatabaseActions()
+
+    val scope = rememberCoroutineScope()
+    LaunchedEffect(key1 = action) {
+        if (action != Action.NO_ACTION) {
+            scope.launch {
+                val snackBarResult = scaffoldState.snackbarHostState.showSnackbar(
+                    message = "${action.name}: $taskComment",
+                    actionLabel = "OK"
+                )
+            }
+        }
     }
 }
