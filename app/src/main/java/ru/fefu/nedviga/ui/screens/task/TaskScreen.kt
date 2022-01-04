@@ -2,6 +2,7 @@ package ru.fefu.nedviga.ui.screens.task
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.util.Action
 
@@ -17,6 +18,15 @@ fun TaskScreen(
                 navigateToListScreen = navigateToListScreen
             )
          },
-        content = {}
+        content = {
+            TaskContent(
+                comment = "",
+                onCommentChange = {},
+                description = "",
+                onDescriptionChange = {},
+                taskType = TaskType.MEETING,
+                onTaskTypeSelected = {}
+            )
+        }
     )
 }
