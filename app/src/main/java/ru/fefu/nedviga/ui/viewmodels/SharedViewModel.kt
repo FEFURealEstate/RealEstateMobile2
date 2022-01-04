@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.data.repositories.ToDoRepository
 import ru.fefu.nedviga.util.RequestState
@@ -19,7 +20,10 @@ import javax.inject.Inject
 class SharedViewModel @Inject constructor(
     private val repository: ToDoRepository
 ) : ViewModel() {
-
+    val id: MutableState<Int> = mutableStateOf(0)
+    val comment: MutableState<String> = mutableStateOf("")
+    val description: MutableState<String> = mutableStateOf("")
+    val taskType: MutableState<TaskType> = mutableStateOf(TaskType.MEETING)
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
     val searchTextState: MutableState<String> = mutableStateOf("")
@@ -47,6 +51,20 @@ class SharedViewModel @Inject constructor(
             repository.getSelectedTask(taskId = taskId).collect { task ->
                 _selectedTask.value = task
             }
+        }
+    }
+
+    fun updateTaskFields(selectedTask: ToDoTask?) {
+        if (selectedTask != null) {
+            id.value = selectedTask.id
+            comment.value = selectedTask.comment
+            description.value = selectedTask.duration.toString()
+            taskType.value = selectedTask.type
+        } else {
+            id.value = 0
+            comment.value = ""
+            description.value = ""
+            taskType.value = TaskType.MEETING
         }
     }
 }
