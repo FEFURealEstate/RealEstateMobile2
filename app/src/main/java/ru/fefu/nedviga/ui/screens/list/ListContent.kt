@@ -28,22 +28,49 @@ import ru.fefu.nedviga.util.SearchAppBarState
 fun ListContent(
     allTasks: RequestState<List<ToDoTask>>,
     searchedTasks: RequestState<List<ToDoTask>>,
+    sortState: RequestState<TaskType>,
+    meetingTasks: List<ToDoTask>,
+    showingTasks: List<ToDoTask>,
+    callingTasks: List<ToDoTask>,
     searchAppBarState: SearchAppBarState,
     navigateToTaskScreen: (taskId: Int) -> Unit
 ) {
-    if (searchAppBarState == SearchAppBarState.TRIGGERED) {
-        if (searchedTasks is RequestState.Success) {
-            HandleListContent(
-                tasks = searchedTasks.data,
-                navigateToTaskScreen = navigateToTaskScreen
-            )
-        }
-    } else {
-        if (allTasks is RequestState.Success) {
-            HandleListContent(
-                tasks = allTasks.data,
-                navigateToTaskScreen = navigateToTaskScreen
-            )
+    if (sortState is RequestState.Success) {
+        when {
+            searchAppBarState == SearchAppBarState.TRIGGERED -> {
+                if (searchedTasks is RequestState.Success) {
+                    HandleListContent(
+                        tasks = searchedTasks.data,
+                        navigateToTaskScreen = navigateToTaskScreen
+                    )
+                }
+            }
+            sortState.data == TaskType.NONE -> {
+                if (allTasks is RequestState.Success) {
+                    HandleListContent(
+                        tasks = allTasks.data,
+                        navigateToTaskScreen = navigateToTaskScreen
+                    )
+                }
+            }
+            sortState.data == TaskType.MEETING -> {
+                HandleListContent(
+                    tasks = meetingTasks,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == TaskType.SHOWING -> {
+                HandleListContent(
+                    tasks = showingTasks,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
+            sortState.data == TaskType.CALLING -> {
+                HandleListContent(
+                    tasks = callingTasks,
+                    navigateToTaskScreen = navigateToTaskScreen
+                )
+            }
         }
     }
 }

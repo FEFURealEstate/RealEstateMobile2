@@ -47,7 +47,7 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value =
                         SearchAppBarState.OPENED
                 },
-                onSortClicked = {},
+                onSortClicked = { sharedViewModel.persistSortState(it) },
                 onDeleteAllConfirmed = {
                     sharedViewModel.action.value = Action.DELETE_ALL
                 }
@@ -161,6 +161,12 @@ fun SortAction(
                 onSortClicked(TaskType.CALLING)
             }) {
                 TaskTypeItem(taskType = TaskType.CALLING)
+            }
+            DropdownMenuItem(onClick = {
+                expanded = false
+                onSortClicked(TaskType.NONE)
+            }) {
+                TaskTypeItem(taskType = TaskType.NONE)
             }
         }
     }
