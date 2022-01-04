@@ -67,4 +67,8 @@ class SharedViewModel @Inject constructor(
             taskType.value = TaskType.MEETING
         }
     }
+
+    fun validateFields(): Boolean {
+        return comment.value.isNotEmpty() && description.value.isNotEmpty()
+    }
 }
