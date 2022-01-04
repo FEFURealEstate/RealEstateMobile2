@@ -7,9 +7,10 @@ import androidx.compose.runtime.remember
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import ru.fefu.nedviga.navigation.destinations.listComposable
+import ru.fefu.nedviga.navigation.destinations.splashComposable
 import ru.fefu.nedviga.navigation.destinations.taskComposable
 import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
-import ru.fefu.nedviga.util.Constants.LIST_SCREEN
+import ru.fefu.nedviga.util.Constants.SPLASH_SCREEN
 
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
@@ -21,9 +22,10 @@ fun SetupNavigation(navController: NavHostController, sharedViewModel: SharedVie
 
     NavHost(
         navController = navController,
-        startDestination = LIST_SCREEN
+        startDestination = SPLASH_SCREEN
     ) {
-        listComposable(navigateToTaskScreen = screen.task, sharedViewModel = sharedViewModel)
-        taskComposable(navigateToListScreen = screen.list, sharedViewModel = sharedViewModel)
+        splashComposable(navigateToListScreen = screen.splash)
+        listComposable(navigateToTaskScreen = screen.list, sharedViewModel = sharedViewModel)
+        taskComposable(navigateToListScreen = screen.task, sharedViewModel = sharedViewModel)
     }
 }
