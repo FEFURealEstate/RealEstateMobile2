@@ -1,5 +1,6 @@
 package ru.fefu.nedviga.ui.screens.list
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -11,6 +12,7 @@ import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
 
+@ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
 fun ListScreen (
@@ -58,6 +60,10 @@ fun ListScreen (
                 showingTasks = showingTasks,
                 callingTasks = callingTasks,
                 searchAppBarState = searchAppBarState,
+                onSwipeToDelete = { action, task ->
+                    sharedViewModel.action.value = action
+                    sharedViewModel.updateTaskFields(selectedTask = task)
+                },
                 navigateToTaskScreen = navigateToTaskScreen
             )
         },
