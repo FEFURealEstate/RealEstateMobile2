@@ -7,7 +7,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.launch
-import ru.fefu.nedviga.ui.theme.Purple500
+import ru.fefu.nedviga.ui.theme.fabBackground
 import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
@@ -81,7 +81,7 @@ fun ListFab(
         onClick = {
             onFabClicked(-1)
         },
-        backgroundColor = Purple500
+        backgroundColor = MaterialTheme.colors.fabBackground
     ) {
         Icon(
             imageVector = Icons.Filled.Add,

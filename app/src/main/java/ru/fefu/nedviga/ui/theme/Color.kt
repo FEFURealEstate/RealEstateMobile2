@@ -11,6 +11,7 @@ val Teal200 = Color(0xFF03DAC5)
 
 val LightGray = Color(0xFFFCFCFC)
 val MediumGray = Color(0xFF9C9C9C)
+val AnotherGray = Color(0xFF514F4F)
 val DarkGray = Color(0xFF141414)
 
 val MeetingTypeColor = Color(0xFFFF4A6D)
@@ -37,3 +38,7 @@ get() = if (isLight) DarkGray else LightGray
 val Colors.splashScreenBackground: Color
 @Composable
 get() = if (isLight) Purple700 else Color.Black
+
+val Colors.fabBackground: Color
+@Composable
+get() = if (isLight) Purple500 else AnotherGray
