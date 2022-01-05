@@ -246,7 +246,7 @@ fun TaskItem(
             }
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = toDoTask.comment,
+                text = toDoTask.datetime.toString(),
                 color = MaterialTheme.colors.taskItemTextColor,
                 style = MaterialTheme.typography.subtitle1,
                 maxLines = 2,
@@ -262,7 +262,15 @@ fun TaskItem(
 @Preview
 private fun TaskItemPreview() {
     TaskItem(
-        toDoTask = ToDoTask(0, "Comment", 50, TaskType.SHOWING),
+        toDoTask = ToDoTask(
+            0,
+            "Comment",
+            50,
+            TaskType.SHOWING,
+            "55-cd",
+            3,
+            56
+        ),
         navigateToTaskScreen = {}
     )
 }

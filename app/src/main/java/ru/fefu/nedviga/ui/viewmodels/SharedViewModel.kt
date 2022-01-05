@@ -26,8 +26,11 @@ class SharedViewModel @Inject constructor(
 
     val id: MutableState<Int> = mutableStateOf(0)
     val comment: MutableState<String> = mutableStateOf("")
-    val description: MutableState<String> = mutableStateOf("")
+    val duration: MutableState<Int> = mutableStateOf(0)
     val taskType: MutableState<TaskType> = mutableStateOf(TaskType.MEETING)
+    val uuid: MutableState<String> = mutableStateOf("")
+    val agentId: MutableState<Int> = mutableStateOf(0)
+    val datetime: MutableState<Int> = mutableStateOf(0)
 
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
@@ -129,8 +132,11 @@ class SharedViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
                 comment = comment.value,
-                duration = description.value.toInt(),
-                type = taskType.value
+                duration = duration.value,
+                type = taskType.value,
+                uuid = uuid.value,
+                agent_id = agentId.value,
+                datetime = datetime.value
             )
             repository.addTask(toDoTask = toDoTask)
         }
@@ -142,8 +148,11 @@ class SharedViewModel @Inject constructor(
             val toDoTask = ToDoTask(
                 id = id.value,
                 comment = comment.value,
-                duration = description.value.toInt(),
-                type = taskType.value
+                duration = duration.value,
+                type = taskType.value,
+                uuid = uuid.value,
+                agent_id = agentId.value,
+                datetime = datetime.value
             )
             repository.updateTask(toDoTask = toDoTask)
         }
@@ -154,8 +163,11 @@ class SharedViewModel @Inject constructor(
             val toDoTask = ToDoTask(
                 id = id.value,
                 comment = comment.value,
-                duration = description.value.toInt(),
-                type = taskType.value
+                duration = duration.value,
+                type = taskType.value,
+                uuid = uuid.value,
+                agent_id = agentId.value,
+                datetime = datetime.value
             )
             repository.deleteTask(toDoTask = toDoTask)
         }
@@ -193,17 +205,23 @@ class SharedViewModel @Inject constructor(
         if (selectedTask != null) {
             id.value = selectedTask.id
             comment.value = selectedTask.comment
-            description.value = selectedTask.duration.toString()
+            duration.value = selectedTask.duration
             taskType.value = selectedTask.type
+            uuid.value = selectedTask.uuid
+            agentId.value = selectedTask.agent_id
+            datetime.value = selectedTask.datetime
         } else {
             id.value = 0
             comment.value = ""
-            description.value = ""
+            duration.value = 0
             taskType.value = TaskType.MEETING
+            uuid.value = ""
+            agentId.value = 3
+            datetime.value = 0
         }
     }
 
     fun validateFields(): Boolean {
-        return comment.value.isNotEmpty() && description.value.isNotEmpty()
+        return comment.value.isNotEmpty() and (datetime.value != 0)
     }
 }

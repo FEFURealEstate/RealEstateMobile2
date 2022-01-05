@@ -18,8 +18,9 @@ fun TaskScreen(
     navigateToListScreen: (Action) -> Unit
 ){
     val comment: String by sharedViewModel.comment
-    val description: String by sharedViewModel.description
+    val duration: Int by sharedViewModel.duration
     val taskType: TaskType by sharedViewModel.taskType
+    val datetime: Int by sharedViewModel.datetime
     val context = LocalContext.current
 
     Scaffold(
@@ -43,10 +44,12 @@ fun TaskScreen(
             TaskContent(
                 comment = comment,
                 onCommentChange = { sharedViewModel.comment.value = it },
-                description = description,
-                onDescriptionChange = { sharedViewModel.description.value = it },
+                duration = duration,
+                onDurationChange = { sharedViewModel.duration.value = it },
                 taskType = taskType,
-                onTaskTypeSelected = { sharedViewModel.taskType.value = it }
+                onTaskTypeSelected = { sharedViewModel.taskType.value = it },
+                datetime = datetime,
+                onDatetimeChange = { sharedViewModel.datetime.value = it }
             )
         }
     )
@@ -55,7 +58,7 @@ fun TaskScreen(
 fun displayToast(context: Context) {
     Toast.makeText(
         context,
-        "Fields are empty",
+        "Required fields are empty",
         Toast.LENGTH_SHORT
     ).show()
 }

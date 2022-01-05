@@ -17,11 +17,18 @@ import ru.fefu.nedviga.data.models.TaskType
 fun TaskContent(
     comment: String,
     onCommentChange: (String) -> Unit,
-    description: String,
-    onDescriptionChange: (String) -> Unit,
+    duration: Int,
+    onDurationChange: (Int) -> Unit,
     taskType: TaskType,
-    onTaskTypeSelected: (TaskType) -> Unit
+    onTaskTypeSelected: (TaskType) -> Unit,
+    datetime: Int,
+    onDatetimeChange: (Int) -> Unit
 ) {
+    var durationText = ""
+    if (duration != 0) durationText = duration.toString()
+    var datetimeText = ""
+    if (datetime != 0) datetimeText = datetime.toString()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -40,16 +47,40 @@ fun TaskContent(
             modifier = Modifier.height(8.dp),
             color = MaterialTheme.colors.background
         )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = durationText,
+            onValueChange = {
+                if (it == "") onDurationChange(0)
+                else onDurationChange(it.toInt())
+            },
+            label = { Text(text = "Duration") },
+            textStyle = MaterialTheme.typography.body1,
+            singleLine = true
+//            keyboardOptions =
+        )
+        Divider(
+            modifier = Modifier.height(8.dp),
+            color = MaterialTheme.colors.background
+        )
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = datetimeText,
+            onValueChange = {
+                if (it == "") onDatetimeChange(0)
+                else onDatetimeChange(it.toInt())
+            },
+            label = { Text(text = "Datetime") },
+            textStyle = MaterialTheme.typography.body1,
+            singleLine = true
+        )
+        Divider(
+            modifier = Modifier.height(8.dp),
+            color = MaterialTheme.colors.background
+        )
         TaskTypeDropDown(
             taskType = taskType,
             onTaskTypeSelected = onTaskTypeSelected
-        )
-        OutlinedTextField(
-            modifier = Modifier.fillMaxSize(),
-            value = description,
-            onValueChange = { onDescriptionChange(it) },
-            label = { Text(text = "Description") },
-            textStyle = MaterialTheme.typography.body1
         )
     }
 }
@@ -61,9 +92,11 @@ private fun TaskContentPreview() {
     TaskContent(
         comment = "",
         onCommentChange = {},
-        description = "",
-        onDescriptionChange = {},
+        duration = 0,
+        onDurationChange = {},
         taskType = TaskType.MEETING,
-        onTaskTypeSelected = {}
+        onTaskTypeSelected = {},
+        datetime = 0,
+        onDatetimeChange = {},
     )
 }

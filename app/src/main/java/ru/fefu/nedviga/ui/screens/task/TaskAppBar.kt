@@ -181,10 +181,13 @@ private fun NewTaskAppBarPreview() {
 private fun ExistingTaskAppBarPreview() {
     ExistingTaskAppBar(
         selectedTask = ToDoTask(
-            id = 0,
-            comment = "Comment1",
-            duration = 20,
-            type = TaskType.CALLING
+            0,
+            "Comment",
+            50,
+            TaskType.SHOWING,
+            "55-cd",
+            3,
+            56
         ),
         navigateToListScreen = {}
     )

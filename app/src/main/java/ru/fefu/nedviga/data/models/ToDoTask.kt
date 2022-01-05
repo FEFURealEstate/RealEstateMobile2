@@ -11,7 +11,7 @@ data class ToDoTask (
     val comment: String,
     val duration: Int,
     val type: TaskType,
-    //uuid
-    //agent_id
-    //datetime
+    val uuid: String,
+    val agent_id: Int,
+    val datetime: Int
 )
