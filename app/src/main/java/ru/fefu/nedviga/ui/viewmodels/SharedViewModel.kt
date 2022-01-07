@@ -27,7 +27,7 @@ class SharedViewModel @Inject constructor(
     val id: MutableState<Int> = mutableStateOf(0)
     val comment: MutableState<String> = mutableStateOf("")
     val duration: MutableState<Int> = mutableStateOf(0)
-    val taskType: MutableState<TaskType> = mutableStateOf(TaskType.MEETING)
+    val taskType: MutableState<TaskType> = mutableStateOf(TaskType.meeting)
     val uuid: MutableState<String> = mutableStateOf("")
     val agentId: MutableState<Int> = mutableStateOf(0)
     val datetime: MutableState<Int> = mutableStateOf(0)
@@ -62,15 +62,15 @@ class SharedViewModel @Inject constructor(
             initialValue = emptyList()
         )
 
-    val showingTasks: StateFlow<List<ToDoTask>> =
-        repository.getShowingTasks.stateIn(
+    val presentationTasks: StateFlow<List<ToDoTask>> =
+        repository.getPresentationTasks.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
         )
 
-    val callingTasks: StateFlow<List<ToDoTask>> =
-        repository.getCallingTasks.stateIn(
+    val phoneCallTasks: StateFlow<List<ToDoTask>> =
+        repository.getPhoneCallTasks.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(),
             initialValue = emptyList()
@@ -214,7 +214,7 @@ class SharedViewModel @Inject constructor(
             id.value = 0
             comment.value = ""
             duration.value = 0
-            taskType.value = TaskType.MEETING
+            taskType.value = TaskType.meeting
             uuid.value = ""
             agentId.value = 3
             datetime.value = 0

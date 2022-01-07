@@ -28,8 +28,8 @@ fun ListScreen (
     val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
     val sortState by sharedViewModel.sortState.collectAsState()
     val meetingTasks by sharedViewModel.meetingTasks.collectAsState()
-    val showingTasks by sharedViewModel.showingTasks.collectAsState()
-    val callingTasks by sharedViewModel.callingTasks.collectAsState()
+    val presentationTasks by sharedViewModel.presentationTasks.collectAsState()
+    val phoneCallTasks by sharedViewModel.phoneCallTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
     val scaffoldState = rememberScaffoldState()
@@ -57,8 +57,8 @@ fun ListScreen (
                 searchedTasks = searchedTasks,
                 sortState = sortState,
                 meetingTasks = meetingTasks,
-                showingTasks = showingTasks,
-                callingTasks = callingTasks,
+                presentationTasks = presentationTasks,
+                phoneCallTasks = phoneCallTasks,
                 searchAppBarState = searchAppBarState,
                 onSwipeToDelete = { action, task ->
                     sharedViewModel.action.value = action

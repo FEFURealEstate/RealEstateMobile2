@@ -44,7 +44,7 @@ class DataStoreRepository @Inject constructor(
             }
         }
         .map { preferences ->
-            val sortState = preferences[PreferenceKeys.sortKey] ?: TaskType.NONE.name
+            val sortState = preferences[PreferenceKeys.sortKey] ?: TaskType.none.name
             sortState
         }
 }

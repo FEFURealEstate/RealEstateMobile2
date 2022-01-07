@@ -14,14 +14,14 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table WHERE id=:taskId")
     fun getSelectedTask(taskId: Int): Flow<ToDoTask>
 
-    @Query("SELECT * FROM todo_table WHERE type LIKE 'M%'")
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'm%'")
     fun getMeetingTasks(): Flow<List<ToDoTask>>
 
-    @Query("SELECT * FROM todo_table WHERE type LIKE 'S%'")
-    fun getShowingTasks(): Flow<List<ToDoTask>>
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'pr%'")
+    fun getPresentationTasks(): Flow<List<ToDoTask>>
 
-    @Query("SELECT * FROM todo_table WHERE type LIKE 'C%'")
-    fun getCallingTasks(): Flow<List<ToDoTask>>
+    @Query("SELECT * FROM todo_table WHERE type LIKE 'ph%'")
+    fun getPhoneCallTasks(): Flow<List<ToDoTask>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTask(toDoTask: ToDoTask)

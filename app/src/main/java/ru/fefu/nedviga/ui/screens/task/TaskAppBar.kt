@@ -184,7 +184,7 @@ private fun ExistingTaskAppBarPreview() {
             0,
             "Comment",
             50,
-            TaskType.SHOWING,
+            TaskType.presentation,
             "55-cd",
             3,
             56

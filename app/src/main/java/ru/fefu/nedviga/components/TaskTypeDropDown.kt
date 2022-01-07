@@ -83,21 +83,21 @@ fun TaskTypeDropDown(
         ) {
             DropdownMenuItem(onClick = {
                 expanded = false
-                onTaskTypeSelected(TaskType.MEETING)
+                onTaskTypeSelected(TaskType.meeting)
             }) {
-                TaskTypeItem(taskType = TaskType.MEETING)
+                TaskTypeItem(taskType = TaskType.meeting)
             }
             DropdownMenuItem(onClick = {
                 expanded = false
-                onTaskTypeSelected(TaskType.SHOWING)
+                onTaskTypeSelected(TaskType.presentation)
             }) {
-                TaskTypeItem(taskType = TaskType.SHOWING)
+                TaskTypeItem(taskType = TaskType.presentation)
             }
             DropdownMenuItem(onClick = {
                 expanded = false
-                onTaskTypeSelected(TaskType.CALLING)
+                onTaskTypeSelected(TaskType.phone_call)
             }) {
-                TaskTypeItem(taskType = TaskType.CALLING)
+                TaskTypeItem(taskType = TaskType.phone_call)
             }
         }
     }
@@ -108,7 +108,7 @@ fun TaskTypeDropDown(
 @Preview
 private fun TaskTypeDropDownPreview() {
     TaskTypeDropDown(
-        taskType = TaskType.MEETING,
+        taskType = TaskType.meeting,
         onTaskTypeSelected = {}
     )
 }

@@ -43,8 +43,8 @@ fun ListContent(
     searchedTasks: RequestState<List<ToDoTask>>,
     sortState: RequestState<TaskType>,
     meetingTasks: List<ToDoTask>,
-    showingTasks: List<ToDoTask>,
-    callingTasks: List<ToDoTask>,
+    presentationTasks: List<ToDoTask>,
+    phoneCallTasks: List<ToDoTask>,
     searchAppBarState: SearchAppBarState,
     onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit
@@ -60,7 +60,7 @@ fun ListContent(
                     )
                 }
             }
-            sortState.data == TaskType.NONE -> {
+            sortState.data == TaskType.none -> {
                 if (allTasks is RequestState.Success) {
                     HandleListContent(
                         tasks = allTasks.data,
@@ -69,23 +69,23 @@ fun ListContent(
                     )
                 }
             }
-            sortState.data == TaskType.MEETING -> {
+            sortState.data == TaskType.meeting -> {
                 HandleListContent(
                     tasks = meetingTasks,
                     onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen
                 )
             }
-            sortState.data == TaskType.SHOWING -> {
+            sortState.data == TaskType.presentation -> {
                 HandleListContent(
-                    tasks = showingTasks,
+                    tasks = presentationTasks,
                     onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen
                 )
             }
-            sortState.data == TaskType.CALLING -> {
+            sortState.data == TaskType.phone_call -> {
                 HandleListContent(
-                    tasks = callingTasks,
+                    tasks = phoneCallTasks,
                     onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen
                 )
@@ -266,7 +266,7 @@ private fun TaskItemPreview() {
             0,
             "Comment",
             50,
-            TaskType.SHOWING,
+            TaskType.presentation,
             "55-cd",
             3,
             56

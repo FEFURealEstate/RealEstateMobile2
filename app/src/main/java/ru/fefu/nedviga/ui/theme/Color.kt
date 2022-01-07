@@ -15,8 +15,8 @@ val AnotherGray = Color(0xFF514F4F)
 val DarkGray = Color(0xFF141414)
 
 val MeetingTypeColor = Color(0xFFFF4A6D)
-val ShowingTypeColor = Color(0xFFFFF6A5)
-val CallingTypeColor = Color(0xFF00D9BB)
+val PresentationTypeColor = Color(0xFFFFF6A5)
+val PhoneCallTypeColor = Color(0xFF00D9BB)
 val NoneTypeColor = MediumGray
 
 val Colors.topAppBarContentColor: Color

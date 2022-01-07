@@ -34,5 +34,5 @@ fun TaskTypeItem(taskType: TaskType) {
 @Composable
 @Preview
 fun TakTypeItemPreview() {
-    TaskTypeItem(taskType = TaskType.CALLING)
+    TaskTypeItem(taskType = TaskType.phone_call)
 }

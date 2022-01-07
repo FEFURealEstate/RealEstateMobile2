@@ -146,27 +146,27 @@ fun SortAction(
         ) {
             DropdownMenuItem(onClick = {
                 expanded = false
-                onSortClicked(TaskType.MEETING)
+                onSortClicked(TaskType.meeting)
             }) {
-                TaskTypeItem(taskType = TaskType.MEETING)
+                TaskTypeItem(taskType = TaskType.meeting)
             }
             DropdownMenuItem(onClick = {
                 expanded = false
-                onSortClicked(TaskType.SHOWING)
+                onSortClicked(TaskType.presentation)
             }) {
-                TaskTypeItem(taskType = TaskType.SHOWING)
+                TaskTypeItem(taskType = TaskType.presentation)
             }
             DropdownMenuItem(onClick = {
                 expanded = false
-                onSortClicked(TaskType.CALLING)
+                onSortClicked(TaskType.phone_call)
             }) {
-                TaskTypeItem(taskType = TaskType.CALLING)
+                TaskTypeItem(taskType = TaskType.phone_call)
             }
             DropdownMenuItem(onClick = {
                 expanded = false
-                onSortClicked(TaskType.NONE)
+                onSortClicked(TaskType.none)
             }) {
-                TaskTypeItem(taskType = TaskType.NONE)
+                TaskTypeItem(taskType = TaskType.none)
             }
         }
     }

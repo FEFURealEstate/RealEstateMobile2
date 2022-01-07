@@ -94,7 +94,7 @@ private fun TaskContentPreview() {
         onCommentChange = {},
         duration = 0,
         onDurationChange = {},
-        taskType = TaskType.MEETING,
+        taskType = TaskType.meeting,
         onTaskTypeSelected = {},
         datetime = 0,
         onDatetimeChange = {},

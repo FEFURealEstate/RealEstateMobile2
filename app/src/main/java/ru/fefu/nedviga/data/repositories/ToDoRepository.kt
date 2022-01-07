@@ -11,8 +11,8 @@ class ToDoRepository @Inject constructor(private val toDoDao: ToDoDao) {
 
     val getAllTasks: Flow<List<ToDoTask>> = toDoDao.getAllTasks()
     val getMeetingTasks: Flow<List<ToDoTask>> = toDoDao.getMeetingTasks()
-    val getShowingTasks: Flow<List<ToDoTask>> = toDoDao.getShowingTasks()
-    val getCallingTasks: Flow<List<ToDoTask>> = toDoDao.getCallingTasks()
+    val getPresentationTasks: Flow<List<ToDoTask>> = toDoDao.getPresentationTasks()
+    val getPhoneCallTasks: Flow<List<ToDoTask>> = toDoDao.getPhoneCallTasks()
 
     fun getSelectedTask(taskId: Int) : Flow<ToDoTask> {
         return toDoDao.getSelectedTask(taskId = taskId)
