@@ -21,6 +21,7 @@ fun TaskScreen(
     val duration: Int by sharedViewModel.duration
     val taskType: TaskType by sharedViewModel.taskType
     val datetime: Int by sharedViewModel.datetime
+    val date: String by sharedViewModel.date
     val context = LocalContext.current
 
     Scaffold(
@@ -49,7 +50,9 @@ fun TaskScreen(
                 taskType = taskType,
                 onTaskTypeSelected = { sharedViewModel.taskType.value = it },
                 datetime = datetime,
-                onDatetimeChange = { sharedViewModel.datetime.value = it }
+                onDatetimeChange = { sharedViewModel.datetime.value = it },
+                date = date,
+                onDateChange = {sharedViewModel.date.value = it}
             )
         }
     )

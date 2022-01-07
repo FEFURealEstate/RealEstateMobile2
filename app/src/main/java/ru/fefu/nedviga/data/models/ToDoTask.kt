@@ -13,5 +13,6 @@ data class ToDoTask (
     val type: TaskType,
     val uuid: String,
     val agent_id: Int,
-    val datetime: Int
+    val datetime: Int,
+    val date: String
 )

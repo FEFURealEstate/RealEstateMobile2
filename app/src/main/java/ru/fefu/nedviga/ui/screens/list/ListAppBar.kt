@@ -304,7 +304,7 @@ private fun DefaultListAppBarPreview() {
 
 @Composable
 @Preview
-private fun SerachAppBarPreview() {
+private fun SearchAppBarPreview() {
     SearchAppBar(
         text = "Search",
         onTextChange = {},

@@ -246,7 +246,7 @@ fun TaskItem(
             }
             Text(
                 modifier = Modifier.fillMaxWidth(),
-                text = toDoTask.datetime.toString(),
+                text = toDoTask.date,
                 color = MaterialTheme.colors.taskItemTextColor,
                 style = MaterialTheme.typography.subtitle1,
                 maxLines = 2,
@@ -269,7 +269,8 @@ private fun TaskItemPreview() {
             TaskType.presentation,
             "55-cd",
             3,
-            56
+            56,
+            "date123"
         ),
         navigateToTaskScreen = {}
     )

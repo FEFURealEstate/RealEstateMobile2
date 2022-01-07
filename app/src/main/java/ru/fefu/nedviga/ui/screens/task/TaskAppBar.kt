@@ -187,7 +187,8 @@ private fun ExistingTaskAppBarPreview() {
             TaskType.presentation,
             "55-cd",
             3,
-            56
+            56,
+            "date"
         ),
         navigateToListScreen = {}
     )

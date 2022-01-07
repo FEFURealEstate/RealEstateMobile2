@@ -31,7 +31,8 @@ fun NavGraphBuilder.taskComposable(
         LaunchedEffect(key1 = selectedTask) {
             if (selectedTask != null || taskId == -1) {
                 sharedViewModel.updateTaskFields(selectedTask = selectedTask)
-            }        }
+            }
+        }
 
         TaskScreen(
             selectedTask = selectedTask,

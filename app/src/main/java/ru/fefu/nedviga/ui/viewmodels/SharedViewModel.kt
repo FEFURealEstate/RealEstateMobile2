@@ -31,6 +31,7 @@ class SharedViewModel @Inject constructor(
     val uuid: MutableState<String> = mutableStateOf("")
     val agentId: MutableState<Int> = mutableStateOf(0)
     val datetime: MutableState<Int> = mutableStateOf(0)
+    val date: MutableState<String> = mutableStateOf("")
 
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
@@ -136,7 +137,8 @@ class SharedViewModel @Inject constructor(
                 type = taskType.value,
                 uuid = uuid.value,
                 agent_id = agentId.value,
-                datetime = datetime.value
+                datetime = datetime.value,
+                date = date.value
             )
             repository.addTask(toDoTask = toDoTask)
         }
@@ -152,7 +154,8 @@ class SharedViewModel @Inject constructor(
                 type = taskType.value,
                 uuid = uuid.value,
                 agent_id = agentId.value,
-                datetime = datetime.value
+                datetime = datetime.value,
+                date = date.value
             )
             repository.updateTask(toDoTask = toDoTask)
         }
@@ -167,7 +170,8 @@ class SharedViewModel @Inject constructor(
                 type = taskType.value,
                 uuid = uuid.value,
                 agent_id = agentId.value,
-                datetime = datetime.value
+                datetime = datetime.value,
+                date = date.value
             )
             repository.deleteTask(toDoTask = toDoTask)
         }
@@ -210,6 +214,7 @@ class SharedViewModel @Inject constructor(
             uuid.value = selectedTask.uuid
             agentId.value = selectedTask.agent_id
             datetime.value = selectedTask.datetime
+            date.value = selectedTask.date
         } else {
             id.value = 0
             comment.value = ""
@@ -217,7 +222,8 @@ class SharedViewModel @Inject constructor(
             taskType.value = TaskType.meeting
             uuid.value = ""
             agentId.value = 3
-            datetime.value = 0
+            datetime.value = 123
+            date.value = ""
         }
     }
 
