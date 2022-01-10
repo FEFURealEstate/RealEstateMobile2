@@ -8,7 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 
 @Composable

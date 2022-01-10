@@ -8,7 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import ru.fefu.nedviga.ui.screens.list.ListScreen
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Constants.LIST_ARGUMENT_KEY
 import ru.fefu.nedviga.util.Constants.LIST_SCREEN
 import ru.fefu.nedviga.util.toAction

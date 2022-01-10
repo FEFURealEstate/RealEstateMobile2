@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import ru.fefu.nedviga.navigation.destinations.listComposable
 import ru.fefu.nedviga.navigation.destinations.splashComposable
 import ru.fefu.nedviga.navigation.destinations.taskComposable
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Constants.SPLASH_SCREEN
 
 @ExperimentalAnimationApi

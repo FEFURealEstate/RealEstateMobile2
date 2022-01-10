@@ -11,7 +11,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ru.fefu.nedviga.navigation.SetupNavigation
 import ru.fefu.nedviga.ui.theme.NedvigaTheme
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

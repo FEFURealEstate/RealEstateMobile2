@@ -1,4 +1,4 @@
-package ru.fefu.nedviga.ui.viewmodels
+package ru.fefu.nedviga.data.viewmodels
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import ru.fefu.nedviga.components.DisplayAlertDialog
 import ru.fefu.nedviga.components.TaskTypeItem
 import ru.fefu.nedviga.ui.theme.Typography
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
 import ru.fefu.nedviga.util.TrailingIconState

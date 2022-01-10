@@ -8,7 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.launch
 import ru.fefu.nedviga.ui.theme.fabBackground
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
 

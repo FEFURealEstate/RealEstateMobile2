@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navArgument
 import ru.fefu.nedviga.ui.screens.task.TaskScreen
-import ru.fefu.nedviga.ui.viewmodels.SharedViewModel
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.Constants.TASK_ARGUMENT_KEY
 import ru.fefu.nedviga.util.Constants.TASK_SCREEN
