@@ -19,6 +19,8 @@ import ru.fefu.nedviga.components.TaskTypeDropDown
 import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.ui.screens.date.SpinnerViewModel
 import ru.fefu.nedviga.ui.theme.Purple500
+import ru.fefu.nedviga.ui.theme.fabBackground
+import ru.fefu.nedviga.ui.theme.inColor
 import ru.fefu.nedviga.ui.theme.taskItemTextColor
 
 @Composable
@@ -92,10 +94,10 @@ fun TaskContent(
                 },
                 modifier = Modifier
                     .clip(RoundedCornerShape(10.dp))
-                    .background(Purple500)
+                    .background(MaterialTheme.colors.fabBackground)
                     .padding(5.dp)
             ) {
-                Text(text = "Select Date", color = Color.White)
+                Text(text = "Select Date", color = MaterialTheme.colors.inColor)
             }
             if (dateTime.value == "")
                 Text(text = date, Modifier.padding(20.dp, 12.dp), color = MaterialTheme.colors.taskItemTextColor)

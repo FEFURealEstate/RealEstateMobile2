@@ -41,7 +41,7 @@ get() = if (isLight) Purple700 else Color.Black
 
 val Colors.fabBackground: Color
 @Composable
-get() = if (isLight) Purple500 else AnotherGray
+get() = if (isLight) Purple500 else Purple200
 
 val Colors.welcomeTextColor: Color
 @Composable
@@ -50,3 +50,7 @@ get() = if (isLight) AnotherGray else Purple200
 val Colors.imageBackgroundColor: Color
 @Composable
 get() = if (isLight) Purple500 else Purple200
+
+val Colors.inColor: Color
+@Composable
+get() = if (isLight) Color.White else DarkGray

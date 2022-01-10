@@ -9,7 +9,7 @@ import ru.fefu.nedviga.util.Result
 import ru.fefu.nedviga.data.models.User
 import ru.fefu.nedviga.data.repositories.LoginRepository
 
-class ProfileViewModel: ViewModel() {
+class ProfileViewModel:ViewModel() {
     private val loginRepository = LoginRepository()
 
     private val _profile = MutableSharedFlow<Result<User>>(replay = 0)

@@ -2,12 +2,16 @@ package ru.fefu.nedviga.data.viewmodels
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import ru.fefu.nedviga.MainActivity
 import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.data.repositories.DataStoreRepository
@@ -20,7 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SharedViewModel @Inject constructor(
     private val repository: ToDoRepository,
-    private val dataStoreRepository: DataStoreRepository
+    private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
 
@@ -32,6 +36,8 @@ class SharedViewModel @Inject constructor(
     val agentId: MutableState<Int> = mutableStateOf(0)
     val datetime: MutableState<Int> = mutableStateOf(0)
     val date: MutableState<String> = mutableStateOf("")
+    val _flag = MutableLiveData(false)
+    var flag: LiveData<Boolean> = _flag
 
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
@@ -183,6 +189,12 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun exit() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _flag.postValue(true)
+        }
+    }
+
     fun handleDatabaseActions(action: Action) {
         when (action) {
             Action.ADD -> {
@@ -196,6 +208,9 @@ class SharedViewModel @Inject constructor(
             }
             Action.DELETE_ALL -> {
                 deleteAllTasks()
+            }
+            Action.EXIT -> {
+                exit()
             }
             Action.UNDO -> {
                 addTask()
@@ -228,6 +243,6 @@ class SharedViewModel @Inject constructor(
     }
 
     fun validateFields(): Boolean {
-        return comment.value.isNotEmpty() and (datetime.value != 0)
+        return comment.value.isNotEmpty() and (datetime.value != 0) and (date.value != "")
     }
 }

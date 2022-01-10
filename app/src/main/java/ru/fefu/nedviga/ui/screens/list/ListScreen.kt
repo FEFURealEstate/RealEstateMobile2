@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.launch
 import ru.fefu.nedviga.ui.theme.fabBackground
 import ru.fefu.nedviga.data.viewmodels.SharedViewModel
+import ru.fefu.nedviga.ui.theme.inColor
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.SearchAppBarState
 
@@ -86,7 +87,7 @@ fun ListFab(
         Icon(
             imageVector = Icons.Filled.Add,
             contentDescription = "Add Button",
-            tint = Color.White
+            tint = MaterialTheme.colors.inColor
         )
     }
 }

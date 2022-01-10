@@ -50,6 +50,9 @@ fun ListAppBar(
                 onSortClicked = { sharedViewModel.persistSortState(it) },
                 onDeleteAllConfirmed = {
                     sharedViewModel.action.value = Action.DELETE_ALL
+                },
+                onExitConfirmed = {
+                    sharedViewModel.action.value = Action.EXIT
                 }
             )
         }
@@ -76,7 +79,8 @@ fun ListAppBar(
 fun DefaultListAppBar(
     onSearchedClicked: () -> Unit,
     onSortClicked: (TaskType) -> Unit,
-    onDeleteAllConfirmed: () -> Unit
+    onDeleteAllConfirmed: () -> Unit,
+    onExitConfirmed: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -88,7 +92,8 @@ fun DefaultListAppBar(
             ListAppBarActions(
                 onSearchedClicked = onSearchedClicked,
                 onSortClicked = onSortClicked,
-                onDeleteAllConfirmed = onDeleteAllConfirmed
+                onDeleteAllConfirmed = onDeleteAllConfirmed,
+                onExitConfirmed = onExitConfirmed
             )
         },
         backgroundColor = MaterialTheme.colors.topAppBarBackgroundColor
@@ -99,9 +104,11 @@ fun DefaultListAppBar(
 fun ListAppBarActions(
     onSearchedClicked: () -> Unit,
     onSortClicked: (TaskType) -> Unit,
-    onDeleteAllConfirmed: () -> Unit
-    ) {
+    onDeleteAllConfirmed: () -> Unit,
+    onExitConfirmed: () -> Unit
+) {
     var openDialog by remember { mutableStateOf(false) }
+    var openDialog2 by remember { mutableStateOf(false) }
 
     DisplayAlertDialog(
         title = "Remove All Tasks?",
@@ -111,9 +118,18 @@ fun ListAppBarActions(
         onYesClicked = { onDeleteAllConfirmed() }
     )
 
+    DisplayAlertDialog(
+        title = "Exit?",
+        message = "Are you sure you want to exit? There is no going back after this action.",
+        openDialog = openDialog2,
+        closeDialog = { openDialog2 = false },
+        onYesClicked = { onExitConfirmed() }
+    )
+
     SearchAction(onSearchedClicked = onSearchedClicked)
     SortAction(onSortClicked = onSortClicked)
     DeleteAllAction(onDeleteAllConfirmed = { openDialog = true })
+    ExitAction(onExitConfirmed = { openDialog2 = true })
 }
 
 @Composable
@@ -179,7 +195,7 @@ fun DeleteAllAction(
     var expanded by remember { mutableStateOf(false)}
     IconButton(onClick = { expanded = true }) {
         Icon(
-            painter = painterResource(id = R.drawable.ic_vertical_menu),
+            painter = painterResource(id = R.drawable.ic_delete),
             contentDescription = "Delete All",
             tint = MaterialTheme.colors.topAppBarContentColor
         )
@@ -194,6 +210,35 @@ fun DeleteAllAction(
                 Text(
                     modifier = Modifier.padding(start = 12.dp),
                     text = "Delete All",
+                    style = Typography.subtitle2
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ExitAction(
+    onExitConfirmed: () -> Unit
+) {
+    var expanded by remember { mutableStateOf(false)}
+    IconButton(onClick = { expanded = true }) {
+        Icon(
+            painter = painterResource(id = R.drawable.ic_exit),
+            contentDescription = "Exit",
+            tint = MaterialTheme.colors.topAppBarContentColor
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = { expanded = false }
+        ) {
+            DropdownMenuItem(onClick = {
+                expanded = false
+                onExitConfirmed()
+            }) {
+                Text(
+                    modifier = Modifier.padding(start = 12.dp),
+                    text = "Exit",
                     style = Typography.subtitle2
                 )
             }
@@ -298,7 +343,8 @@ private fun DefaultListAppBarPreview() {
     DefaultListAppBar(
         onSearchedClicked = {},
         onSortClicked = {},
-        onDeleteAllConfirmed = {}
+        onDeleteAllConfirmed = {},
+        onExitConfirmed = {}
     )
 }
 
