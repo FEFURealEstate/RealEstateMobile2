@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import ru.fefu.nedviga.ui.screens.task.TaskScreen
 import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Action

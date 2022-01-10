@@ -6,7 +6,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import ru.fefu.nedviga.ui.screens.list.ListScreen
 import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.util.Constants.LIST_ARGUMENT_KEY
