@@ -25,16 +25,16 @@ class LoginRepository {
             .catch { emit(Result.Error(it)) }
             .flowOn(Dispatchers.IO)
 
-    suspend fun getProfile(): Flow<Result<User>> =
-        flow<Result<User>> {
-            emit(
-                Result.Success(
-                    activityApi.getProfile()
-                )
-            )
-        }
-            .catch { emit(Result.Error(it)) }
-            .flowOn(Dispatchers.IO)
+//    suspend fun getProfile(): Flow<Result<User>> =
+//        flow<Result<User>> {
+//            emit(
+//                Result.Success(
+//                    activityApi.getProfile()
+//                )
+//            )
+//        }
+//            .catch { emit(Result.Error(it)) }
+//            .flowOn(Dispatchers.IO)
 
     suspend fun logout(): Flow<Result<Unit>> =
         flow<Result<Unit>> {

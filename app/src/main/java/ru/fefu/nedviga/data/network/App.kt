@@ -36,7 +36,7 @@ class App : Application() {
     val retrofit by lazy {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://fefu.t.feip.co/")
+            .baseUrl("https://mobile-api-estate.herokuapp.com/")
             .client(okHttpClient)
             .build()
     }

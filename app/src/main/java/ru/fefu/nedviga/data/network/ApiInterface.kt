@@ -7,15 +7,15 @@ import ru.fefu.nedviga.data.models.UserToken
 import ru.fefu.nedviga.data.models.User
 
 interface ApiInterface {
-    @GET("api/user/profile")
-    suspend fun getProfile(): User
+//    @GET("api/user/profile")
+//    suspend fun getProfile(): User
 
-    @POST("api/auth/login")
+    @POST("login")
     suspend fun login(
-        @Query("login") login: String,
+        @Query("username") login: String,
         @Query("password") password: String,
     ): UserToken
 
-    @POST("api/auth/logout")
+    @POST("logout")
     suspend fun logout(): Unit
 }

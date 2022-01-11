@@ -12,23 +12,23 @@ import ru.fefu.nedviga.data.repositories.LoginRepository
 class ProfileViewModel:ViewModel() {
     private val loginRepository = LoginRepository()
 
-    private val _profile = MutableSharedFlow<Result<User>>(replay = 0)
+//    private val _profile = MutableSharedFlow<Result<User>>(replay = 0)
     private val _logoutUser = MutableSharedFlow<Result<Unit>>(replay = 0)
 
-    val profile get() = _profile
+//    val profile get() = _profile
     val logoutUser get() = _logoutUser
 
-    fun getProfile() {
-        viewModelScope.launch {
-            loginRepository.getProfile()
-                .collect {
-                    when(it) {
-                        is Result.Success<*> -> _profile.emit(it)
-                        is Result.Error<*> -> _profile.emit(it)
-                    }
-                }
-        }
-    }
+//    fun getProfile() {
+//        viewModelScope.launch {
+//            loginRepository.getProfile()
+//                .collect {
+//                    when(it) {
+//                        is Result.Success<*> -> _profile.emit(it)
+//                        is Result.Error<*> -> _profile.emit(it)
+//                    }
+//                }
+//        }
+//    }
 
     fun logout() {
         viewModelScope.launch {
