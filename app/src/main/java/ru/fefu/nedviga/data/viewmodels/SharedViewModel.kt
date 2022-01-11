@@ -1,5 +1,6 @@
 package ru.fefu.nedviga.data.viewmodels
 
+import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
@@ -21,6 +22,7 @@ import ru.fefu.nedviga.data.repositories.ToDoRepository
 import ru.fefu.nedviga.util.Action
 import ru.fefu.nedviga.util.RequestState
 import ru.fefu.nedviga.util.SearchAppBarState
+import java.io.Console
 import javax.inject.Inject
 
 @HiltViewModel
@@ -116,16 +118,18 @@ class SharedViewModel @Inject constructor(
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
     fun setAllTasks(agentId: Int) {
-       try {
-           viewModelScope.launch {
-               val data = activityApi.getEvents(agentId = agentId)
-               data.forEach{
-                   item -> repository.addTask(item)
-               }
-           }
-       } catch (e: Exception) {
+        try {
+            viewModelScope.launch {
+                deleteAllTasks()
+                App.INSTANCE.sharedPreferences.edit().putInt("agentId", agentId).apply()
+                val data = activityApi.getEvents(agentId = agentId)
+                data.forEach { item ->
+                    repository.addTask(item)
+                }
+            }
+        } catch (e: Exception) {
 
-       }
+        }
     }
 
     fun getAllTasks() {
@@ -154,18 +158,35 @@ class SharedViewModel @Inject constructor(
 
     private fun addTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            val toDoTask = ToDoTask(
-                comment = comment.value,
-                duration = duration.value,
-                type = taskType.value,
+            val data = activityApi.createEvent(
                 agentId = agentId.value,
                 datetime = datetime.value,
                 date = date.value,
-                uuid = uuid.value
+                duration = duration.value,
+                type = taskType.value.name,
+                comment = comment.value
             )
-            repository.addTask(toDoTask = toDoTask)
+            repository.addTask(toDoTask = data)
         }
         searchAppBarState.value = SearchAppBarState.CLOSED
+    }
+
+    private fun updateTaskAPI() {
+        try {
+            viewModelScope.launch {
+                activityApi.updateEvent(
+                    uuid = uuid.value,
+                    agentId = agentId.value,
+                    datetime = datetime.value,
+                    date = date.value,
+                    duration = duration.value,
+                    type = taskType.value.name,
+                    comment = comment.value
+                )
+            }
+        } catch (e: Exception) {
+
+        }
     }
 
     private fun updateTask() {
@@ -184,6 +205,16 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun deleteTaskAPI(uuid: String) {
+        try {
+            viewModelScope.launch {
+                activityApi.deleteEvent(uuid)
+            }
+        } catch (e: Exception) {
+
+        }
+    }
+
     private fun deleteTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
@@ -197,6 +228,16 @@ class SharedViewModel @Inject constructor(
                 uuid = uuid.value
             )
             repository.deleteTask(toDoTask = toDoTask)
+        }
+    }
+
+    private fun deleteAllTasksAPI() {
+        try {
+            viewModelScope.launch {
+                activityApi.deleteAllEvents(agentId = agentId.value)
+            }
+        } catch(e: Exception) {
+
         }
     }
 
@@ -218,12 +259,15 @@ class SharedViewModel @Inject constructor(
                 addTask()
             }
             Action.UPDATE -> {
+                updateTaskAPI()
                 updateTask()
             }
             Action.DELETE -> {
+                deleteTaskAPI(uuid.value)
                 deleteTask()
             }
             Action.DELETE_ALL -> {
+                deleteAllTasksAPI()
                 deleteAllTasks()
             }
             Action.EXIT -> {
@@ -232,7 +276,8 @@ class SharedViewModel @Inject constructor(
             Action.UNDO -> {
                 addTask()
             }
-            else -> {}
+            else -> {
+            }
         }
         this.action.value = Action.NO_ACTION
     }
@@ -246,13 +291,14 @@ class SharedViewModel @Inject constructor(
             agentId.value = selectedTask.agentId
             datetime.value = selectedTask.datetime
             date.value = selectedTask.date
+            uuid.value = selectedTask.uuid
         } else {
             id.value = 0
             comment.value = ""
             duration.value = 0
             taskType.value = TaskType.meeting
             uuid.value = ""
-            agentId.value = 3
+            agentId.value = App.INSTANCE.sharedPreferences.getInt("agentId", 300)
             datetime.value = 123
             date.value = ""
         }

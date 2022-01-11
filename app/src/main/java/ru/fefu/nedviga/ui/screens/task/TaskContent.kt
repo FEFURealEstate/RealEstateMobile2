@@ -3,14 +3,18 @@ package ru.fefu.nedviga.ui.screens.task
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,6 +44,7 @@ fun TaskContent(
     val viewModel: SpinnerViewModel = viewModel()
     val dateTime = viewModel.time.observeAsState()
     val convertedDate = viewModel.converted.observeAsState()
+    val focusManager = LocalFocusManager.current
 
     var durationText = ""
     if (duration != 0) durationText = duration.toString()
@@ -56,7 +61,9 @@ fun TaskContent(
             onValueChange = { onCommentChange(it) },
             label = { Text(text = "Comment") },
             textStyle = MaterialTheme.typography.body1,
-            singleLine = true
+            singleLine = true,
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text),
         )
         Divider(
             modifier = Modifier.height(8.dp),
@@ -72,7 +79,8 @@ fun TaskContent(
             label = { Text(text = "Duration") },
             textStyle = MaterialTheme.typography.body1,
             singleLine = true,
-            keyboardOptions = KeyboardOptions (keyboardType = KeyboardType.Number)
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy (imeAction = ImeAction.Done, keyboardType = KeyboardType.Number)
         )
         Divider(
             modifier = Modifier.height(8.dp),

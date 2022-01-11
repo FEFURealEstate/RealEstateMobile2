@@ -6,9 +6,9 @@ import ru.fefu.nedviga.ui.theme.MeetingTypeColor
 import ru.fefu.nedviga.ui.theme.NoneTypeColor
 import ru.fefu.nedviga.ui.theme.PresentationTypeColor
 
-enum class TaskType(val color: Color) {
-    meeting(MeetingTypeColor),
-    presentation(PresentationTypeColor),
-    phone_call(PhoneCallTypeColor),
-    none(NoneTypeColor)
+enum class TaskType(val color: Color, val title: String) {
+    meeting(MeetingTypeColor, "Meeting"),
+    presentation(PresentationTypeColor, "Presentation"),
+    phone_call(PhoneCallTypeColor, "Phone call"),
+    none(NoneTypeColor, "None")
 }

@@ -1,14 +1,18 @@
 package ru.fefu.nedviga.data.repositories
 
+import androidx.activity.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import kotlinx.coroutines.flow.Flow
 import ru.fefu.nedviga.data.ToDoDao
 import ru.fefu.nedviga.data.models.ToDoTask
+import ru.fefu.nedviga.data.network.ApiInterface
+import ru.fefu.nedviga.data.network.App
+import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import javax.inject.Inject
 
 @ViewModelScoped
 class ToDoRepository @Inject constructor(private val toDoDao: ToDoDao) {
-
     val getAllTasks: Flow<List<ToDoTask>> = toDoDao.getAllTasks()
     val getMeetingTasks: Flow<List<ToDoTask>> = toDoDao.getMeetingTasks()
     val getPresentationTasks: Flow<List<ToDoTask>> = toDoDao.getPresentationTasks()
@@ -27,6 +31,7 @@ class ToDoRepository @Inject constructor(private val toDoDao: ToDoDao) {
     }
 
     suspend fun deleteTask(toDoTask: ToDoTask) {
+
         return toDoDao.deleteTask(toDoTask = toDoTask)
     }
 

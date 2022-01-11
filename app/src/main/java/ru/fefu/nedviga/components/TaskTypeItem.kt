@@ -24,7 +24,7 @@ fun TaskTypeItem(taskType: TaskType) {
         }
         Text(
             modifier = Modifier.padding(start = 12.dp),
-            text = taskType.name,
+            text = taskType.title,
             style = Typography.subtitle1,
             color = MaterialTheme.colors.onSurface
         )

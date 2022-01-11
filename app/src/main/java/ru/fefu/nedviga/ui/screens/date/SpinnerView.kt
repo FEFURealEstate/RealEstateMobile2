@@ -25,7 +25,7 @@ class SpinnerViewModel: ViewModel() {
         val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentDateTime.get(Calendar.MINUTE)
 
-        DatePickerDialog(context, { _, year, month, day ->
+        val datepicker = DatePickerDialog(context, { _, year, month, day ->
             TimePickerDialog(context, { _, hour, minute ->
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
@@ -54,7 +54,11 @@ class SpinnerViewModel: ViewModel() {
                 val sec = seconds.atZone(ZoneId.systemDefault()).toEpochSecond().toInt()
                 updateDateTime(time, sec)
             }, startHour, startMinute, false).show()
-        }, startYear, startMonth, startDay).show()
+        }, startYear, startMonth, startDay)
+
+
+        datepicker.datePicker.minDate = System.currentTimeMillis()
+        datepicker.show()
     }
 
     private fun updateDateTime(dateTime: String, converted: Int) {

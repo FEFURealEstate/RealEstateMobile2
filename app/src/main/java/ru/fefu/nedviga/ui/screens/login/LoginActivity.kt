@@ -12,6 +12,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -23,11 +24,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModelProvider
@@ -79,14 +83,14 @@ class LoginActivity : ComponentActivity() {
                 if (it is Result.Success<User>) {
                     App.INSTANCE.sharedPreferences.edit().putString("token", it.result.token)
                         .apply()
-                    App.INSTANCE.sharedPreferences.edit().putInt("agentId", it.result.agentId)
+                    App.INSTANCE.sharedPreferences.edit().putInt("agentId", it.result.agentId).apply()
                     sharedViewModel.setAllTasks(it.result.agentId)
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else if (it is Result.Error<User>) {
-                    Toast.makeText(this, it.e.toString(), Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, it.e.message, Toast.LENGTH_LONG).show()
                 }
             }
             .launchIn(lifecycleScope)
@@ -97,19 +101,20 @@ class LoginActivity : ComponentActivity() {
 @Composable
 fun LoginScreen(mContext: Context, viewModel: LoginViewModel) {
 
-    Column(modifier = Modifier.padding(32.dp)) {
+    Column(modifier = Modifier.padding(32.dp), horizontalAlignment = Alignment.CenterHorizontally) {
         var login by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         var passwordVisibility by remember { mutableStateOf(false) }
+        var focusManager = LocalFocusManager.current
 
-        Text(text = "Welcome,", fontWeight = FontWeight.Bold, fontSize = 32.sp, color = MaterialTheme.colors.welcomeTextColor)
+        Text(text = "Welcome,", modifier = Modifier.align(Alignment.Start), fontWeight = FontWeight.Bold, fontSize = 32.sp, color = MaterialTheme.colors.welcomeTextColor)
         Spacer(modifier = Modifier.height(2.dp))
-        Text(text = "Sign in to continue", fontWeight = FontWeight.Bold, fontSize = 26.sp, color = Color.LightGray)
+        Text(text = "Sign in to continue", modifier = Modifier.align(Alignment.Start) ,fontWeight = FontWeight.Bold, fontSize = 26.sp, color = Color.LightGray)
         Spacer(modifier = Modifier.height(10.dp))
         Box(
             modifier = Modifier
-                .size(375.dp).clip(shape = RoundedCornerShape(13.dp)),
-            contentAlignment = Alignment.TopCenter,
+                .size(325.dp).clip(shape = RoundedCornerShape(13.dp)),
+            contentAlignment = Alignment.Center,
         ) {
             Image(
                 modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.imageBackgroundColor),
@@ -122,11 +127,11 @@ fun LoginScreen(mContext: Context, viewModel: LoginViewModel) {
         OutlinedTextField(
             value = login,
             onValueChange = { login = it },
-            label = { Text(text = "Email") },
+            label = { Text(text = "Login") },
             textStyle = MaterialTheme.typography.body1,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-        )
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Text)        )
         Spacer(modifier = Modifier.height(4.dp))
         OutlinedTextField(
             value = password,
@@ -134,7 +139,8 @@ fun LoginScreen(mContext: Context, viewModel: LoginViewModel) {
             label = { Text(text = "Password") },
             textStyle = MaterialTheme.typography.body1,
             modifier = Modifier.fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
+            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done, keyboardType = KeyboardType.Password),
             visualTransformation =
                 if (passwordVisibility) VisualTransformation.None
                 else PasswordVisualTransformation(),

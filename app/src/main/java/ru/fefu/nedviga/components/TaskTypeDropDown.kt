@@ -60,7 +60,7 @@ fun TaskTypeDropDown(
         Text(
             modifier = Modifier
                 .weight(8f),
-            text = taskType.name,
+            text = taskType.title,
             style = MaterialTheme.typography.subtitle2
         )
         IconButton(
