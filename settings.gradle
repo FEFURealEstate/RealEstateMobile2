@@ -8,3 +8,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Nedviga"
 include ':app'
+include ':wearableestateapp'

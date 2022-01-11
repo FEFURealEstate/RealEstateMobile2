@@ -3,6 +3,7 @@ package ru.fefu.nedviga.data.network
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
+import ru.fefu.nedviga.data.models.ToDoTask
 import ru.fefu.nedviga.data.models.UserToken
 import ru.fefu.nedviga.data.models.User
 
@@ -18,4 +19,7 @@ interface ApiInterface {
 
     @POST("logout")
     suspend fun logout(): Unit
+
+    @GET("events?agentId=777")
+    suspend fun getEvents(): List<ToDoTask>
 }

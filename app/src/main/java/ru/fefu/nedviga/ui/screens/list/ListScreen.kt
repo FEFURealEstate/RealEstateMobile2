@@ -1,12 +1,20 @@
 package ru.fefu.nedviga.ui.screens.list
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Money
 import androidx.compose.runtime.*
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import kotlinx.coroutines.launch
+import ru.fefu.nedviga.R
 import ru.fefu.nedviga.ui.theme.fabBackground
 import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.ui.theme.inColor
@@ -16,7 +24,7 @@ import ru.fefu.nedviga.util.SearchAppBarState
 @ExperimentalAnimationApi
 @ExperimentalMaterialApi
 @Composable
-fun ListScreen (
+fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     sharedViewModel: SharedViewModel
 ) {
@@ -46,11 +54,11 @@ fun ListScreen (
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-             ListAppBar(
-                 sharedViewModel = sharedViewModel,
-                 searchAppBarState = searchAppBarState,
-                 searchTextState = searchTextState
-             )
+            ListAppBar(
+                sharedViewModel = sharedViewModel,
+                searchAppBarState = searchAppBarState,
+                searchTextState = searchTextState
+            )
         },
         content = {
             ListContent(
@@ -93,6 +101,43 @@ fun ListFab(
 }
 
 @Composable
+fun TestFab() {
+    val context = LocalContext.current
+    FloatingActionButton(
+        onClick = {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val name = "channel"
+                val descriptionText = "channel_d"
+                val importance = NotificationManager.IMPORTANCE_DEFAULT
+                val channel = NotificationChannel("channe1", name, importance).apply {
+                    description = descriptionText
+                }
+                // Register the channel with the system
+                val notificationManager: NotificationManager =
+                    context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                notificationManager.createNotificationChannel(channel)
+            }
+
+            var builder = NotificationCompat.Builder(context, "channe1")
+                .setSmallIcon(R.drawable.ic_logo_dark)
+                .setContentTitle("My notification")
+                .setContentText("Событие началось")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            var notificationManager = NotificationManagerCompat.from(context)
+
+            notificationManager.notify(1, builder.build())
+        },
+        backgroundColor = MaterialTheme.colors.fabBackground
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Money,
+            contentDescription = "Add Button",
+            tint = MaterialTheme.colors.inColor
+        )
+    }
+}
+
+@Composable
 fun DisplaySnackBar(
     scaffoldState: ScaffoldState,
     handleDatabaseActions: () -> Unit,
@@ -125,6 +170,12 @@ private fun setMessage(action: Action, taskComment: String): String {
         Action.DELETE_ALL -> "All tasks were removed"
         else -> "${action.name}: $taskComment"
     }
+}
+
+private fun createNotificationChannel() {
+    // Create the NotificationChannel, but only on API 26+ because
+    // the NotificationChannel class is new and not in the support library
+
 }
 
 private fun setActionLabel(action: Action): String {

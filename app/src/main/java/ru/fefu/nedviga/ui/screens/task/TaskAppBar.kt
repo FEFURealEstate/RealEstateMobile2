@@ -176,20 +176,20 @@ private fun NewTaskAppBarPreview() {
     )
 }
 
-@Composable
-@Preview
-private fun ExistingTaskAppBarPreview() {
-    ExistingTaskAppBar(
-        selectedTask = ToDoTask(
-            0,
-            "Comment",
-            50,
-            TaskType.presentation,
-            "55-cd",
-            3,
-            56,
-            "date"
-        ),
-        navigateToListScreen = {}
-    )
-}
+//@Composable
+//@Preview
+//private fun ExistingTaskAppBarPreview() {
+//    ExistingTaskAppBar(
+//        selectedTask = ToDoTask(
+//            0,
+//            "Comment",
+//            50,
+//            TaskType.presentation,
+//            "55-cd",
+//            3,
+//            56,
+//            "date"
+//        ),
+//        navigateToListScreen = {}
+//    )
+//}

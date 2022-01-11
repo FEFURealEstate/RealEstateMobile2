@@ -14,6 +14,8 @@ import kotlinx.coroutines.launch
 import ru.fefu.nedviga.MainActivity
 import ru.fefu.nedviga.data.models.TaskType
 import ru.fefu.nedviga.data.models.ToDoTask
+import ru.fefu.nedviga.data.network.ApiInterface
+import ru.fefu.nedviga.data.network.App
 import ru.fefu.nedviga.data.repositories.DataStoreRepository
 import ru.fefu.nedviga.data.repositories.ToDoRepository
 import ru.fefu.nedviga.util.Action
@@ -46,6 +48,8 @@ class SharedViewModel @Inject constructor(
     private val _searchedTasks =
         MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val searchedTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchedTasks
+
+    private val activityApi = App.INSTANCE.retrofit.create(ApiInterface::class.java)
 
     fun searchDatabase(searchQuery: String) {
         _searchedTasks.value = RequestState.Loading
@@ -111,6 +115,19 @@ class SharedViewModel @Inject constructor(
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
+    fun setAllTasks() {
+       try {
+           viewModelScope.launch {
+               val data = activityApi.getEvents()
+               data.forEach{
+                   item -> repository.addTask(item)
+               }
+           }
+       } catch (e: Exception) {
+
+       }
+    }
+
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
@@ -141,10 +158,10 @@ class SharedViewModel @Inject constructor(
                 comment = comment.value,
                 duration = duration.value,
                 type = taskType.value,
-                uuid = uuid.value,
-                agent_id = agentId.value,
+                agentId = agentId.value,
                 datetime = datetime.value,
-                date = date.value
+                date = date.value,
+                uuid = uuid.value
             )
             repository.addTask(toDoTask = toDoTask)
         }
@@ -158,10 +175,10 @@ class SharedViewModel @Inject constructor(
                 comment = comment.value,
                 duration = duration.value,
                 type = taskType.value,
-                uuid = uuid.value,
-                agent_id = agentId.value,
+                agentId = agentId.value,
                 datetime = datetime.value,
-                date = date.value
+                date = date.value,
+                uuid = uuid.value
             )
             repository.updateTask(toDoTask = toDoTask)
         }
@@ -174,10 +191,10 @@ class SharedViewModel @Inject constructor(
                 comment = comment.value,
                 duration = duration.value,
                 type = taskType.value,
-                uuid = uuid.value,
-                agent_id = agentId.value,
+                agentId = agentId.value,
                 datetime = datetime.value,
-                date = date.value
+                date = date.value,
+                uuid = uuid.value
             )
             repository.deleteTask(toDoTask = toDoTask)
         }
@@ -226,8 +243,7 @@ class SharedViewModel @Inject constructor(
             comment.value = selectedTask.comment
             duration.value = selectedTask.duration
             taskType.value = selectedTask.type
-            uuid.value = selectedTask.uuid
-            agentId.value = selectedTask.agent_id
+            agentId.value = selectedTask.agentId
             datetime.value = selectedTask.datetime
             date.value = selectedTask.date
         } else {

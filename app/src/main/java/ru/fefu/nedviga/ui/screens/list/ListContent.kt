@@ -264,13 +264,13 @@ private fun TaskItemPreview() {
     TaskItem(
         toDoTask = ToDoTask(
             0,
-            "Comment",
-            50,
+            "123123",
+            123,
             TaskType.presentation,
-            "55-cd",
+            "123",
             3,
-            56,
-            "date123"
+            123,
+            "123123"
         ),
         navigateToTaskScreen = {}
     )
