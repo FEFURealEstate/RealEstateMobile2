@@ -115,10 +115,10 @@ class SharedViewModel @Inject constructor(
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Idle)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
-    fun setAllTasks() {
+    fun setAllTasks(agentId: Int) {
        try {
            viewModelScope.launch {
-               val data = activityApi.getEvents()
+               val data = activityApi.getEvents(agentId = agentId)
                data.forEach{
                    item -> repository.addTask(item)
                }

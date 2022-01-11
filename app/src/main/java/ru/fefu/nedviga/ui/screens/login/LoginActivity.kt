@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.fefu.nedviga.MainActivity
 import ru.fefu.nedviga.R
+import ru.fefu.nedviga.data.models.User
 import ru.fefu.nedviga.data.models.UserToken
 import ru.fefu.nedviga.data.network.App
 import ru.fefu.nedviga.data.viewmodels.LoginViewModel
@@ -75,14 +76,16 @@ class LoginActivity : ComponentActivity() {
 
         viewModel.dataFlow
             .onEach {
-                if (it is Result.Success<UserToken>) {
+                if (it is Result.Success<User>) {
                     App.INSTANCE.sharedPreferences.edit().putString("token", it.result.token)
                         .apply()
+                    App.INSTANCE.sharedPreferences.edit().putInt("agentId", it.result.agentId)
+                    sharedViewModel.setAllTasks(it.result.agentId)
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags =
                         Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                } else if (it is Result.Error<UserToken>) {
+                } else if (it is Result.Error<User>) {
                     Toast.makeText(this, it.e.toString(), Toast.LENGTH_LONG).show()
                 }
             }

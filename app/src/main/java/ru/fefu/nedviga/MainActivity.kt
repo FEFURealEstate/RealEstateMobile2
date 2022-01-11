@@ -38,8 +38,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[ProfileViewModel::class.java]
 
-        sharedViewModel.setAllTasks()
-
         setContent {
             NedvigaTheme {
                 navController = rememberNavController()

@@ -14,8 +14,8 @@ import ru.fefu.nedviga.data.network.App
 class LoginRepository {
     private val activityApi = App.INSTANCE.retrofit.create(ApiInterface::class.java)
 
-    suspend fun login(login:String, password:String): Flow<Result<UserToken>> =
-        flow<Result<UserToken>> {
+    suspend fun login(login:String, password:String): Flow<Result<User>> =
+        flow<Result<User>> {
             emit(
                 Result.Success(
                     activityApi.login(login, password)

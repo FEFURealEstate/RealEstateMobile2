@@ -15,11 +15,13 @@ interface ApiInterface {
     suspend fun login(
         @Query("username") login: String,
         @Query("password") password: String,
-    ): UserToken
+    ): User
 
     @POST("logout")
     suspend fun logout(): Unit
 
-    @GET("events?agentId=777")
-    suspend fun getEvents(): List<ToDoTask>
+    @GET("events")
+    suspend fun getEvents(
+        @Query("agentId") agentId: Int
+    ): List<ToDoTask>
 }
