@@ -1,13 +1,21 @@
 package ru.fefu.nedviga.data.viewmodels
 
+import android.app.AlarmManager
+import android.app.Application
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Context.ALARM_SERVICE
+import android.content.Intent
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
+import dagger.hilt.android.internal.Contexts.getApplication
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -19,9 +27,7 @@ import ru.fefu.nedviga.data.network.ApiInterface
 import ru.fefu.nedviga.data.network.App
 import ru.fefu.nedviga.data.repositories.DataStoreRepository
 import ru.fefu.nedviga.data.repositories.ToDoRepository
-import ru.fefu.nedviga.util.Action
-import ru.fefu.nedviga.util.RequestState
-import ru.fefu.nedviga.util.SearchAppBarState
+import ru.fefu.nedviga.util.*
 import java.io.Console
 import javax.inject.Inject
 
@@ -156,6 +162,28 @@ class SharedViewModel @Inject constructor(
         }
     }
 
+    private fun scheduleNotification()
+    {
+        val intent = Intent(App.INSTANCE.applicationContext, Notification::class.java)
+        intent.putExtra(titleExtra, "You scheduled ${comment.value}")
+        intent.putExtra(messageExtra, "Duration: ${duration.value} min.")
+
+        val pendingIntent = PendingIntent.getBroadcast(
+            App.INSTANCE.applicationContext,
+            notificationID,
+            intent,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
+
+        val alarmManager = App.INSTANCE.applicationContext.getSystemService(ALARM_SERVICE) as AlarmManager
+        val time = datetime.value.toLong() * 1000 - 600000
+        alarmManager.setExactAndAllowWhileIdle(
+            AlarmManager.RTC_WAKEUP,
+            time,
+            pendingIntent
+        )
+    }
+
     private fun addTask() {
         viewModelScope.launch(Dispatchers.IO) {
             val data = activityApi.createEvent(
@@ -166,6 +194,7 @@ class SharedViewModel @Inject constructor(
                 type = taskType.value.name,
                 comment = comment.value
             )
+            scheduleNotification()
             repository.addTask(toDoTask = data)
         }
         searchAppBarState.value = SearchAppBarState.CLOSED

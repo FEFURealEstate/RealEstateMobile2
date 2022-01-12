@@ -1,6 +1,10 @@
 package ru.fefu.nedviga
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent.getActivity
 import android.content.Context
+import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -12,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavHostController
@@ -25,6 +30,7 @@ import ru.fefu.nedviga.navigation.SetupNavigation
 import ru.fefu.nedviga.ui.theme.NedvigaTheme
 import ru.fefu.nedviga.data.viewmodels.SharedViewModel
 import ru.fefu.nedviga.ui.screens.login.LoginActivity
+import ru.fefu.nedviga.util.channelID
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,6 +55,8 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+        createNotificationChannel(this@MainActivity)
+
         viewModel.logoutUser
             .onEach {
                     App.INSTANCE.sharedPreferences.edit().remove("token").apply()
@@ -67,5 +75,15 @@ fun Flag(mContext: Context, sharedViewModel: SharedViewModel, viewModel: Profile
         sharedViewModel._flag.postValue(false)
         viewModel.logout()
     }
+}
+
+private fun createNotificationChannel(context: Context) {
+    val name = "Notification Channel"
+    val desc = "A Description of the Channel"
+    val importance = NotificationManager.IMPORTANCE_DEFAULT
+    val channel = NotificationChannel(channelID, name, importance)
+    channel.description = desc
+    val notificationManager = context.getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+    notificationManager.createNotificationChannel(channel)
 }
 
